@@ -45,6 +45,17 @@ public class Account {
                 .isPositiveOrZero();
     }
 
+    public boolean deposit(Money money, AccountId sourceAccountId) {
+        this.activityWindow.addActivity(new Activity(
+                this.id,
+                sourceAccountId,
+                this.id,
+                LocalDateTime.now(),
+                money
+        ));
+        return true;
+    }
+
     @Value
     public static class AccountId {
         private Long value;
