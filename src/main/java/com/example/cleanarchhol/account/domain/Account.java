@@ -25,6 +25,10 @@ public class Account {
         );
     }
 
+    /*
+     * 도메인 엔티티 내에서 비즈니스 규칙을 검증
+     * 입력 유효성은 입력 모델(input model)에서 검증 -> SendMoneyCommand
+     */
     public boolean withdraw(Money money, AccountId targetAccountId) {
         if (!mayWithdraw(money))
             return false;
