@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Value;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Account {
@@ -17,6 +18,21 @@ public class Account {
 
     @Getter
     private final ActivityWindow activityWindow;
+
+    public static Account withoutId(
+            Money baselineBalance,
+            ActivityWindow activityWindow) {
+        return new Account(null, baselineBalance, activityWindow);
+    }
+
+    public static Account withId(
+            AccountId accountId,
+            Money baselineBalance,
+            ActivityWindow activityWindow) {
+        return new Account(accountId, baselineBalance, activityWindow);
+    }
+
+    public Optional<AccountId> getId() { return Optional.ofNullable(this.id); }
 
     public Money calculateBalance() {
         return Money.add(
