@@ -4,13 +4,19 @@ import com.example.cleanarchhol.account.domain.Account;
 import com.example.cleanarchhol.account.domain.Money;
 
 import com.example.cleanarchhol.common.SelfValidating;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Value;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-@Getter
+/*
+ * 기존 @Getter 시 Controller 테스트 코드 실패
+ */
+@Value
+@EqualsAndHashCode(callSuper = false)
 public class SendMoneyCommand extends SelfValidating<SendMoneyCommand> {
     @NotNull
     private final Account.AccountId sourceAccountId;
@@ -19,7 +25,6 @@ public class SendMoneyCommand extends SelfValidating<SendMoneyCommand> {
     private final Account.AccountId targetAccountId;
 
     @NotNull
-    @Min(value = 1)
     private final Money money;
 
     /*
