@@ -38,6 +38,32 @@ class SendMoneyServiceTest {
                     moneyTransferProperties());
 
     @Test
+    void givenWithdrawalFails_thenOnlySourceAccountIsLockedAndReleased() {
+
+        Account.AccountId sourceAccountId = new Account.AccountId(41L);
+        Account sourceAccount = givenAnAccountWithId(sourceAccountId);
+
+        Account.AccountId targetAccountId = new Account.AccountId(42L);
+        Account targetAccount = givenAnAccountWithId(targetAccountId);
+
+        givenWithdrawalWillFail(sourceAccount);
+        givenDepositWillSucceed(targetAccount);
+
+        SendMoneyCommand command = new SendMoneyCommand(
+                sourceAccountId,
+                targetAccountId,
+                Money.of(300L));
+
+        boolean success = sendMoneyService.sendMoney(command);
+
+        assertThat(success).isFalse();
+
+        then(accountLock).should().lockAccount(eq(sourceAccountId));
+        then(accountLock).should().releaseAccount(eq(sourceAccountId));
+        then(accountLock).should(times(0)).lockAccount(eq(targetAccountId));
+    }
+
+    @Test
     void transactionSucceeds() {
         //given
         Account sourceAccount = givenSourceAccount();

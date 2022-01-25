@@ -14,7 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-public class AccountPersistenceAdapter implements
+class AccountPersistenceAdapter implements
         LoadAccountPort,
         UpdateAccountStatePort {
     private final AccountRepository accountRepository;

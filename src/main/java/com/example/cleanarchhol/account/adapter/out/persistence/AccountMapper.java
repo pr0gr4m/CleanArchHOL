@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AccountMapper {
+class AccountMapper {
 
     public Account mapToDomainEntity(AccountJpaEntity account,
                                      List<ActivityJpaEntity> activities,

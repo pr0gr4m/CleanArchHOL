@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 @WebAdapter
 @RestController
 @RequiredArgsConstructor
-public class SendMoneyController {
+class SendMoneyController {
     private final SendMoneyUseCase sendMoneyUseCase;
 
     @PostMapping(path = "/accounts/send/{sourceAccountId}/{targetAccountId}/{amount}")
